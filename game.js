@@ -1,9 +1,9 @@
           /*this are the vairables that hold the scores of both humans and computer*/
         let humanScore=0
         let computerScore=0
-  /*the function that plays the game for 5 rounds*/
-function playGame() {
-    for (let index = 1; index < 6; index++) {
+  /*the function that plays the game*/
+function playGame(humchoice) {
+
         /*this is the function that generates random numbers*/
         function randomValue() {
             let value=Math.floor(Math.random()*10)
@@ -26,19 +26,28 @@ function playGame() {
         }
         /*this the function that is used to get the values from humans*/
         function getHumanChoice() {
-            let choice=prompt('play the game')
-            return choice
+            
+            return humchoice
         }
 
         /*this is the function that displays the results*/
         function results(result) {
-            console.log(result)
+            if (humanScore==5||computerScore==5){
+                humanScore=0
+                computerScore=0
+            }
             if (result[4]=='w') {
                 humanScore+=1
             } else if(result[4]=='l') {
                 computerScore+=1
             }
-            console.log(`you:${humanScore}  computer:${computerScore}`)
+            document.querySelector('.first').textContent=`${result}`
+            document.querySelector('.second').textContent=`you:${humanScore}  computer:${computerScore}`
+            if (humanScore==5){
+                alert('you are the winner')
+            }else if (computerScore==5){
+                alert('computer won')
+            }
         }
         /*this the function that plays the game each round*/
         function playRound(HC, CC) {
@@ -59,7 +68,15 @@ function playGame() {
             results(announcement)
         }
         playRound(getHumanChoice(), getComputerChoice())
-    }
+    
 }
 
-playGame()
+document.querySelector('body').addEventListener('click', (e)=>{
+    if(e.target.innerText==='ROCK'){
+        playGame('ROCK')
+    }else if(e.target.innerText==='PAPER'){
+        playGame('paper')
+    }else if(e.target.innerText==='SCISSORS'){
+        playGame('scissors')
+    }
+})
